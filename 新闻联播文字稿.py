@@ -14,7 +14,7 @@ yesterday = (datetime.date.today() + datetime.timedelta(days=-1)).strftime('%Y%m
 pro = ts.pro_api()
 #描述：获取新闻联播文字稿数据，数据开始于2006年6月，超过12年历史
 #积分：用户积累120积分可以调取，但会做流控限制，超过5000无限制
-df = pro.cctv_news(date='20201230')
+df = pro.cctv_news(date=yesterday)
 print(df.values)
 
 df.to_csv('新闻联播{}.csv'.format(yesterday),encoding='utf-8-sig')
