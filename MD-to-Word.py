@@ -3,7 +3,8 @@ from tkinter import filedialog
 import logging  # 添加: 导入 logging 模块
 import markdown
 from docx import Document
-from docx.shared import Inches
+from docx.shared import Inches, Pt
+from docx.oxml.ns import qn
 import os
 from tkinter.ttk import Progressbar  # 添加: 导入 Progressbar 模块
 from tkinter import messagebox  # 添加: 导入 messagebox 模块
@@ -41,8 +42,11 @@ def markdown_to_word(md_file_path, output_docx_path):
         elif element.name == 'p':
             text = element.get_text(strip=True)
             if text and (not doc.paragraphs or doc.paragraphs[-1].text != text):
-                # 创建新段落
+                # 创建新段落并设置字体
                 p = doc.add_paragraph()
+                p.style.font.name = '微软雅黑'
+                p.style._element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
+                p.style.font.size = Pt(10.5)
                 
                 # 检查是否有strong标签
                 strong_elements = element.find_all('strong')
